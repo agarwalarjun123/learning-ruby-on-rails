@@ -1,8 +1,6 @@
 ## Articles Controller for all article related functions
-require_relative '../lib/api_handler/http_error_handler'
-require_relative '../lib/api_handler/success_handler'
+
 class ArticlesController < ApplicationController
-  include HttpErrorHandler
   rescue_from StandardError, with: :error_handler
   def index
     render json: { message: 'hello world' }
