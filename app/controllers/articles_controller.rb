@@ -1,22 +1,24 @@
+## Articles Controller for all article related functions
+require_relative '../lib/api_handler/http_error_handler'
+require_relative '../lib/api_handler/success_handler'
 class ArticlesController < ApplicationController
+  include HttpErrorHandler
+  rescue_from StandardError, with: :error_handler
   def index
     render json: { message: 'hello world' }
   end
 
-  def standard_exception(message, status)
-    render json: { error: { message: }, is_success: false }, status:
-  end
-
-  def article
+  def show
     article = Article.find(params[:id])
-    render json: article
+    success_handler(article)
   rescue ActiveRecord::RecordNotFound
-    standard_exception('Not Found', 404)
+    http_exception_handler('Article Not Found', 404)
   end
 
   def create
-    @article = Article.create!(article_params)
-    render json: @article
+    @article = Article.new(article_params)
+    @article.save!
+    success_handler @article, :ok
   end
 
   def page
@@ -24,7 +26,7 @@ class ArticlesController < ApplicationController
     limit = params[:limit].nil? ? 5 : params[:limit].to_i
     articles = Article.all.offset((page - 1) * limit.to_i).limit(limit.to_i)
     @result = { result: articles, metadata: { page:, limit: } }
-    render json: @result
+    success_handler(@result)
   end
 
   private
