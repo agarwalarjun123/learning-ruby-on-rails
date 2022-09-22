@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Rails server",
+            "type": "Ruby",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/rails",
+            "args": [
+                "server"
+            ],
+            "pathToRDebugIDE": "/Users/arjun.agarwal/Programming/learning-ruby-on-rails/bin/rdebug-ide",
+            "showDebuggerOutput": true,
+            "env": {
+                "PATH": "/Users/arjun.agarwal/.rvm/gems/ruby-3.1.2/bin:/Users/arjun.agarwal/.rvm/gems/ruby-3.1.2@global/bin:/Users/arjun.agarwal/.rvm/rubies/ruby-3.1.2/bin:/Users/arjun.agarwal/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+                "GEM_HOME": "/Users/arjun.agarwal/.rvm/gems/ruby-3.1.2",
+                "GEM_PATH": "/Users/arjun.agarwal/.rvm/gems/ruby-3.1.2:/Users/arjun.agarwal/.rvm/gems/ruby-3.1.2@global",
+                "RUBY_VERSION": "ruby-3.1.2"
+              }
+              
+        }
+    ]
+}

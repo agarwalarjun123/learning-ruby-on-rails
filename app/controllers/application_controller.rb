@@ -1,3 +1,3 @@
 class ApplicationController < ActionController::API
-  include ApiHandler::HttpHandler
+  include HttpHandler
 end

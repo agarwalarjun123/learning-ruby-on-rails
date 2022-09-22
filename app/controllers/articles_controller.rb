@@ -1,9 +1,9 @@
 ## Articles Controller for all article related functions
-
 class ArticlesController < ApplicationController
   rescue_from StandardError, with: :error_handler
+
   def index
-    render json: { message: 'hello world' }
+    render success_handler({ message: 'hello world' })
   end
 
   def show

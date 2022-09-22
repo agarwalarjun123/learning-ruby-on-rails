@@ -6,7 +6,7 @@ module HttpHandler
   def error_handler(exception)
     logger.error exception.message
     logger.error exception.backtrace.join('\n')
-    render json: { error: { message: 'Internal Server Error' }, is_success: false }
+    render json: { error: { message: 'Internal Server Error' }, is_success: false }, status: 500
   end
 
   def success_handler(response, status = 200)
