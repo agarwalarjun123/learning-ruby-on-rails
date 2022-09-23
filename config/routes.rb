@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   root 'articles#index'
   scope :article do
     get '/:id', to: 'articles#show'
-    get '/', to: 'articles#page'
+    get '/', to: 'articles#index'
     post '/', to: 'articles#create'
+  end
+  scope :user do
+    post '/login', to: 'authors#login'
+    post '/signup', to: 'authors#signup'
+    get '/profile', to: 'authors#profile'
   end
 end
