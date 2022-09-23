@@ -5,7 +5,7 @@ class AuthorsController < ApplicationController
     if @user&.authenticate(params[:password])
       success_handler({ token: @user.generate_token })
     else
-      http_exception_handler('Incorrect Credentials', 401)
+      http_exception_handler('Incorrect Credentials', :unauthorized)
     end
   end
 
@@ -14,7 +14,7 @@ class AuthorsController < ApplicationController
     @author.password = params[:password]
     @author.save! && success_handler({})
   rescue ActiveRecord::RecordNotUnique
-    http_exception_handler('User Exists', 400)
+    http_exception_handler('User Exists', :bad_request)
   end
 
   def profile

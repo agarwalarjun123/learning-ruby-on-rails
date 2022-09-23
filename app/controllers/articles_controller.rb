@@ -8,9 +8,9 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = article_params
-    @article[:authors_id] = @user.id
-    @article = Article.new(@article).save!
+    @article = Article.new(article_params)
+    @article.author_id = @user.id
+    @article.save!
     success_handler @article, :ok
   end
 

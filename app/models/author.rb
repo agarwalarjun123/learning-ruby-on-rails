@@ -4,6 +4,7 @@ class Author < ApplicationRecord
   validates :email, presence: true
   validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
   before_save :downcase_fields
+  has_many :articles, dependent: :destroy
 
   def downcase_fields
     name.downcase! && email.downcase!
@@ -14,6 +15,6 @@ class Author < ApplicationRecord
   end
 
   def generate_token
-    JWT.encode({ email: }, 'string')
+    JWT.encode({ email: }, Rails.configuration.jwt_token)
   end
 end
