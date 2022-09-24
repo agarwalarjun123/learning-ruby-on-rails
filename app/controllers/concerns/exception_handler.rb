@@ -1,4 +1,4 @@
-module HttpHandler
+module ExceptionHandler
   def render_record_not_found(exception)
     http_exception_handler(exception.message, :bad_request)
   end

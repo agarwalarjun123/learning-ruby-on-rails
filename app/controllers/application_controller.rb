@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  include HttpHandler
+  include ExceptionHandler
   include AuthHandler
   rescue_from StandardError, with: :error_handler
   rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found
