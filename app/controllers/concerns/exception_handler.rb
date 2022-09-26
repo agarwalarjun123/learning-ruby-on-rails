@@ -1,17 +1,47 @@
+# rubocop:disable Style/Documentation
 module ExceptionHandler
+  class ApiException < StandardError
+    attr_accessor :status, :message, :data
+
+    def initialize(status, message, data = {})
+      self.status = status
+      self.message = message
+      self.data = data
+      super()
+    end
+  end
+
+  class NotFoundException < ApiException
+    def initialize(message, data = {})
+      super(:not_found, message, data)
+    end
+  end
+
+  class BadRequestException < ApiException
+    def initialize(message, data = {})
+      super(:bad_request, message, data)
+    end
+  end
+
+  class UnauthorizedException < ApiException
+    def initialize(message, data = {})
+      super(:unauthorized, message, data)
+    end
+  end
+
   def render_record_not_found(exception)
-    http_exception_handler(exception.message, :bad_request)
+    error_handler(NotFoundException.new(exception.message))
   end
 
   def render_record_invalid(exception)
-    http_exception_handler(exception.message, :bad_request)
-  end
-
-  def http_exception_handler(message, status = :internal_server_error)
-    render json: { error: { message: }, is_success: false }, status:
+    error_handler(BadRequestException.new(exception.message))
   end
 
   def error_handler(exception)
+    if exception.is_a?(ApiException)
+      return render json: { error: { message: exception.message }, is_success: false }, status: exception.status
+    end
+
     logger.error exception.message
     logger.error exception.backtrace.join('\n')
     render json: { error: { message: 'Internal Server Error' }, is_success: false }, status: :internal_server_error

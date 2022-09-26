@@ -3,11 +3,9 @@ module V1
     before_action :authorize?, only: [:profile]
     def login
       @user = Author.find_by(email: params[:email])
-      if @user&.authenticate(params[:password])
-        success_handler({ token: @user.generate_token })
-      else
-        http_exception_handler('Incorrect Credentials', :unauthorized)
-      end
+      return success_handler({ token: @user.generate_token }) if @user&.authenticate(params[:password])
+
+      raise UnauthorizedException, 'Incorrect Credentials'
     end
 
     def signup
@@ -15,7 +13,7 @@ module V1
       @author.password = params[:password]
       @author.save! && success_handler({})
     rescue ActiveRecord::RecordNotUnique
-      http_exception_handler('User Exists', :bad_request)
+      raise BadRequestException, 'User Exists'
     end
 
     def profile
