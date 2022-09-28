@@ -19,8 +19,19 @@
                 "GEM_HOME": "/Users/arjun.agarwal/.rvm/gems/ruby-3.1.2",
                 "GEM_PATH": "/Users/arjun.agarwal/.rvm/gems/ruby-3.1.2:/Users/arjun.agarwal/.rvm/gems/ruby-3.1.2@global",
                 "RUBY_VERSION": "ruby-3.1.2"
-              }
-              
+            }
+        },
+        {
+            "type": "rdbg",
+            "name": "Attach with rdbg",
+            "request": "attach"
+        },
+        {
+            "type": "rdbg",
+            "name": "Attach with rdbg (tcp 12345)", // Specify your favorite name
+            "request": "attach",
+            "debugPort": "localhost:12345",
+            "localfsMap": "/app:${workspaceFolder}"
         }
     ]
 }

@@ -1,0 +1,44 @@
+version: v2beta1
+name: db
+
+# This is a list of `deployments` that DevSpace can create for this project
+deployments:
+  db:
+    # This deployment uses `helm` but you can also define `kubectl` deployments or kustomizations
+    helm:
+      # Under `values` we can define the values for this Helm chart used during `helm install/upgrade`
+      # You may also use `valuesFiles` to load values from files, e.g. valuesFiles: ["values.yaml"]
+      values:
+        containers:
+          - env:
+              - name: POSTGRES_PASSWORD
+                value: password
+            image: postgres
+            name: db-container
+        service:
+          ports:
+            - containerPort: 5432
+              port: 5432
+              protocol: TCP
+            
+# This is a list of `dev` containers that are based on the containers created by your deployments
+dev:
+  db:
+    labelSelector:
+      app.kubernetes.io/component: db
+    ports:
+      - port: "5432"
+    command:
+      - ""
+    # Sync files between the local filesystem and the development container
+    sync:
+      - path: ./tmp/db:/var/lib/postgresql/data
+        startContainer: true
+
+# Define dependencies to other projects with a devspace.yaml
+# dependencies:
+#   api:
+#     git: https://...  # Git-based dependencies
+#     tag: v1.0.0
+#   ui:
+#     path: ./ui        # Path-based dependencies (for monorepos)
