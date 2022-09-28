@@ -26,6 +26,7 @@ module MyApi
     config.db_host = ENV['DB_HOST']
     config.db_user = ENV['DB_USER']
     config.db_pass = ENV['DB_PASSWORD']
+    config.time_expiry = 4 * 60 * 60
     config.api_only = true
   end
 end

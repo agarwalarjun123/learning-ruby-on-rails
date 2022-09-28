@@ -15,4 +15,4 @@ ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
 # Configure the main process to run when running the image
-CMD ["sh","-c","bundle exec rdbg --open --port=12345 -n -c -- bundle exec rails s -p 3000 -b 0.0.0.0"]
+CMD ["sh","-c","bundle exec rails s -p 3000 -b 0.0.0.0"]

@@ -30,8 +30,6 @@ deployments:
               value: ${DB_USER}
             - name: DB_PASSWORD
               value: ${DB_PASSWORD}
-            - name: CAT_ENV
-              value: ${CAT_ENV}
         service:
           ports:
             - containerPort: 3000
@@ -47,9 +45,12 @@ dev:
     workingDir: /app
     labelSelector:
       app.kubernetes.io/component: web
+    command: ["sh","-c","rm -rf rm -f /app/tmp/pids/server.pid && bundle exec rdbg --open --port=12345 -n -c -- bundle exec rails s -p 3000 -b 0.0.0.0"]
     # Sync files between the local filesystem and the development container
     sync:
       - path: ./:/app
+        onUpload:
+          restartContainer: true
     # Forward the following ports to be able access your application via localhost
     ports:
       - port: "3000"

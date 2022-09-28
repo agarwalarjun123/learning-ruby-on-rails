@@ -15,6 +15,6 @@ class Author < ApplicationRecord
   end
 
   def generate_token
-    JWT.encode({ email: }, Rails.configuration.jwt_token)
+    JWT.encode({ email:, exp: Time.now.to_i + Rails.configuration.time_expiry + 20 }, Rails.configuration.jwt_token)
   end
 end

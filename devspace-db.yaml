@@ -1,6 +1,8 @@
 version: v2beta1
 name: db
 
+vars:
+  DEVSPACE_ENV_FILE: "./.env"
 # This is a list of `deployments` that DevSpace can create for this project
 deployments:
   db:
@@ -12,7 +14,7 @@ deployments:
         containers:
           - env:
               - name: POSTGRES_PASSWORD
-                value: password
+                value: ${DB_PASSWORD}
             image: postgres
             name: db-container
         service:
@@ -28,8 +30,6 @@ dev:
       app.kubernetes.io/component: db
     ports:
       - port: "5432"
-    command:
-      - ""
     # Sync files between the local filesystem and the development container
     sync:
       - path: ./tmp/db:/var/lib/postgresql/data
