@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'articles#index'
   namespace :v1 do
     resources :articles, only: %i[index show create]
-    scope :author do
+    scope :authors do
       post '/login', to: 'authors#login'
       post '/signup', to: 'authors#signup'
       get '/profile', to: 'authors#profile'
