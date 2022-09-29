@@ -4,7 +4,7 @@ USER root
 RUN apt-get update -qq && apt-get install -y build-essential patch libpq-dev
 WORKDIR /app
 COPY Gemfile /app/Gemfile
-# COPY Gemfile.lock /app/Gemfile.lock
+COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
 COPY . .
 
