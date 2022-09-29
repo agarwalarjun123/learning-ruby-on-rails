@@ -4,7 +4,6 @@ module V1
     def login
       @user = Author.find_by(email: params[:email])
       return success_handler({ token: @user.generate_token }) if @user&.authenticate(params[:password])
-
       raise UnauthorizedException, 'Incorrect Credentials'
     end
 

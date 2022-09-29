@@ -1,5 +1,3 @@
-## Articles Controller for all article related functions
-
 module V1
   class ArticlesController < ApplicationController
     before_action :authorize?
@@ -10,18 +8,18 @@ module V1
     end
 
     def create
-      @article = Article.new(article_params)
-      @article.author_id = @user.id
-      @article.save!
-      success_handler @article, :ok
+      article = Article.new(article_params)
+      article.author_id = @user.id
+      article.save!
+      success_handler article, :ok
     end
 
     def index
-      page = params[:page].nil? ? 1 : params[:page].to_i
-      limit = params[:limit].nil? ? 5 : params[:limit].to_i
-      articles = Article.where({ authors_id: @user.id }).offset((page - 1) * limit.to_i).limit(limit.to_i)
-      @result = { result: articles, metadata: { page:, limit: } }
-      success_handler(@result)
+      page = params[:page]&.to_i || 1
+      limit = params[:limit]&.to_i || 5
+      articles = Article.all.offset((page - 1) * limit).limit(limit)
+      result = { result: articles, metadata: { page:, limit:, count: Article.count } }
+      success_handler result, :ok
     end
 
     private
